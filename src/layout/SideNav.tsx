@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const SideNav = () => {
-  const [isToggleOn, setIsToggleOn] = useState(false);
   useEffect(() => {
     const isFluid = JSON.parse(localStorage.getItem('isFluid') || 'false');
     if (isFluid) {
@@ -22,11 +21,15 @@ const SideNav = () => {
   }, []);
 
   function handleToggle(){
-    setIsToggleOn( Boolean(JSON.parse(localStorage.getItem('isNavbarVerticalCollapsed') || 'false')));
+    let collapsed = !Boolean(JSON.parse(localStorage.getItem('isNavbarVerticalCollapsed') || 'false'));
 
-    let result = !isToggleOn;
-
-    localStorage.setItem('isNavbarVerticalCollapsed', result.toString());
+    localStorage.setItem('isNavbarVerticalCollapsed', (collapsed).toString());
+    if (collapsed){
+      document.documentElement.classList.add('navbar-vertical-collapsed');
+    }
+    else{
+      document.documentElement.classList.remove('navbar-vertical-collapsed');
+    }
 
   }
 
